@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .models import Part
 # Create your views here.
 
 
 def parts_list(request):
-    return HttpResponse("Parts list placeholder")
+    parts = Part.objects.all().order_by("part_number")
+    context = {"parts": parts}
+    return render(request, "payloads/parts_list.html", context)
