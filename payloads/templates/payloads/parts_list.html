@@ -1,34 +1,143 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Parts List</title>
+    <title>Parts</title>
   </head>
-  <body>
-    <h1>Parts</h1>
+  <body style="font-family: Arial, sans-serif; background: #eef1f5; margin: 0; padding: 20px;">
 
-    {% if parts %}
-    <table border="1" cellpadding="4">
-      <thead>
-        <tr>
-          <th>Part Number</th>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div style="max-width: 900px; margin: 0 auto;">
+
+      <h1 style="text-align: center; margin-bottom: 30px; font-size: 36px; color: #333;">
+        Parts
+      </h1>
+
+      {% if parts %}
         {% for part in parts %}
-        <tr>
-          <td>{{ part.part_number }}</td>
-          <td>{{ part.name }}</td>
-          <td>{{ part.status }}</td>
-          <td>{{ part.description }}</td>
-        </tr>
+          <div style="
+              background: white;
+              padding: 20px 28px;
+              margin-bottom: 25px;
+              border-radius: 12px;
+              border: 1px solid #d7dce1;
+              box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+          ">
+            <h2 style="font-size: 26px; margin-bottom: 10px; color: #444;">
+              {{ part.part_number }} - {{ part.name }}
+            </h2>
+
+            <!-- STATUS BADGE -->
+            <p>
+              <strong>Status:</strong>
+
+              {% if part.status == "APPROVED" %}
+                <span style="
+                  background: #d4edda;
+                  color: #155724;
+                  padding: 4px 10px;
+                  border-radius: 6px;
+                  font-size: 14px;
+                ">Approved</span>
+
+              {% elif part.status == "PROPOSED" %}
+                <span style="
+                  background: #fff3cd;
+                  color: #856404;
+                  padding: 4px 10px;
+                  border-radius: 6px;
+                  font-size: 14px;
+                ">Proposed</span>
+
+              {% else %}
+                <span style="
+                  background: #f8d7da;
+                  color: #721c24;
+                  padding: 4px 10px;
+                  border-radius: 6px;
+                  font-size: 14px;
+                ">Deprecated</span>
+              {% endif %}
+            </p>
+
+            {% if part.description %}
+              <p style="margin-top: 15px;">
+                <strong>Description:</strong><br>
+                <span style="color: #555;">
+                  {{ part.description }}
+                </span>
+              </p>
+            {% endif %}
+
+            <!-- WORK ITEMS SECTION -->
+            <div style="margin-top: 20px;">
+              <h3 style="font-size: 20px; color: #333; margin-bottom: 10px;">Work Items</h3>
+
+              {% if part.work_items.all %}
+                <ul style="padding-left: 20px; color: #444;">
+                  {% for item in part.work_items.all %}
+                    <li style="margin-bottom: 10px;">
+
+                      <!-- TITLE -->
+                      <strong style="font-size: 16px;">{{ item.title }}</strong>
+
+                      <!-- PRIORITY BADGE -->
+                      {% if item.priority == "HIGH" %}
+                        <span style="
+                          background: #f8d7da;
+                          color: #721c24;
+                          padding: 3px 8px;
+                          border-radius: 6px;
+                          font-size: 12px;
+                          margin-left: 8px;
+                        ">High</span>
+
+                      {% elif item.priority == "MEDIUM" %}
+                        <span style="
+                          background: #fff3cd;
+                          color: #856404;
+                          padding: 3px 8px;
+                          border-radius: 6px;
+                          font-size: 12px;
+                          margin-left: 8px;
+                        ">Medium</span>
+
+                      {% else %}
+                        <span style="
+                          background: #d4edda;
+                          color: #155724;
+                          padding: 3px 8px;
+                          border-radius: 6px;
+                          font-size: 12px;
+                          margin-left: 8px;
+                        ">Low</span>
+                      {% endif %}
+
+                      <!-- DUE DATE -->
+                      {% if item.due_date %}
+                        <span style="
+                          font-weight: bold;
+                          color: #004085;
+                          margin-left: 10px;
+                        ">
+                          (due: {{ item.due_date }})
+                        </span>
+                      {% endif %}
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p style="color: #777; font-style: italic;">No work items</p>
+              {% endif %}
+            </div>
+
+          </div>
         {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p>No parts found.</p>
-    {% endif %}
+      {% else %}
+        <p>No parts found.</p>
+      {% endif %}
+
+    </div>
+
   </body>
 </html>
+
