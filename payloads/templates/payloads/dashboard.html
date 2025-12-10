@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      background: #eef1f5;
+      margin: 0;
+      padding: 20px;
+    "
+  >
+    <div style="max-width: 900px; margin: 0 auto">
+      <!-- NAV / LINKS -->
+      <div style="margin-bottom: 20px;">
+        <a href="{% url 'parts_list' %}" style="margin-right: 15px; text-decoration: none;">
+          ← View Parts
+        </a>
+      </div>
+
+      <h1 style="text-align: center; margin-bottom: 30px; color: #333;">
+        Payloads Dashboard
+      </h1>
+
+      <!-- STATS CARDS -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+          margin-bottom: 30px;
+        "
+      >
+        <div
+          style="
+            background: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid #d7dce1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          "
+        >
+          <h2 style="margin: 0; font-size: 18px; color: #555">
+            Total Parts
+          </h2>
+          <p style="font-size: 28px; margin: 8px 0; color: #2c3e50">
+            {{ total_parts }}
+          </p>
+        </div>
+
+        <div
+          style="
+            background: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid #d7dce1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          "
+        >
+          <h2 style="margin: 0; font-size: 18px; color: #555">
+            Total Work Items
+          </h2>
+          <p style="font-size: 28px; margin: 8px 0; color: #2c3e50">
+            {{ total_work_items }}
+          </p>
+        </div>
+
+        <div
+          style="
+            background: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid #f5c6cb;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          "
+        >
+          <h2 style="margin: 0; font-size: 18px; color: #721c24">
+            High Priority Items
+          </h2>
+          <p style="font-size: 28px; margin: 8px 0; color: #721c24">
+            {{ high_priority_count }}
+          </p>
+        </div>
+
+        <div
+          style="
+            background: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid #b8daff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          "
+        >
+          <h2 style="margin: 0; font-size: 18px; color: #004085">
+            Due in next 7 days
+          </h2>
+          <p style="font-size: 28px; margin: 8px 0; color: #004085">
+            {{ due_soon_count }}
+          </p>
+          <p style="margin: 0; font-size: 12px; color: #6c757d;">
+            Between {{ today }} and {{ soon }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

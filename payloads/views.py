@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render, get_object_or_404
 
 from django.http import HttpResponse
-from .models import Part
+from .models import Part, WorkItem
 from .forms import WorkItemForm
+from datetime import date, timedelta
 
 
 # Create your views here.
@@ -11,7 +12,27 @@ def home(request):
 
 
 def dashboard(request):
-    return HttpResponse("Dashboard template")
+    today = date.today()
+    soon = today + timedelta(days=7)
+    total_parts = Part.objects.count()
+    total_work_items = WorkItem.objects.count()
+    high_priority_count = WorkItem.objects.filter(priority="HIGH").count()
+    due_soon_count = WorkItem.objects.filter(
+        due_date__gte=today,
+        due_date__lte=soon,
+    ).count()
+
+    context = {
+        "total_parts": total_parts,
+        "total_work_items": total_work_items,
+        "high_priority_count": high_priority_count,
+        "due_soon_count": due_soon_count,
+        "today": today,
+        "soon": soon,
+
+    }
+
+    return render(request, "payloads/dashboard.html", context)
 
 
 def parts_list(request):
