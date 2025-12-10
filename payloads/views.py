@@ -14,22 +14,24 @@ def home(request):
 def dashboard(request):
     today = date.today()
     soon = today + timedelta(days=7)
+
     total_parts = Part.objects.count()
     total_work_items = WorkItem.objects.count()
     high_priority_count = WorkItem.objects.filter(priority="HIGH").count()
-    due_soon_count = WorkItem.objects.filter(
+
+    due_soon_items = WorkItem.objects.filter(
         due_date__gte=today,
         due_date__lte=soon,
-    ).count()
+    ).order_by("due_date")
 
     context = {
         "total_parts": total_parts,
         "total_work_items": total_work_items,
         "high_priority_count": high_priority_count,
-        "due_soon_count": due_soon_count,
+        "due_soon_count": due_soon_items.count(),
+        "due_soon_items": due_soon_items,
         "today": today,
         "soon": soon,
-
     }
 
     return render(request, "payloads/dashboard.html", context)
