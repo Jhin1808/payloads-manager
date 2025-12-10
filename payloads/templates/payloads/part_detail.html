@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Part Detail</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      background: #eef1f5;
+      margin: 0;
+      padding: 20px;
+    "
+  >
+    <div style="max-width: 900px; margin: 0 auto">
+      <p>
+        <a href="{% url 'parts_list' %}" style="text-decoration: none"
+          >← Back to parts list</a
+        >
+      </p>
+
+      <div
+        style="
+          background: white;
+          padding: 20px 28px;
+          margin-bottom: 25px;
+          border-radius: 12px;
+          border: 1px solid #d7dce1;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+        "
+      >
+        <h1 style="font-size: 28px; margin-bottom: 10px; color: #444">
+          {{ part.part_number }} - {{ part.name }}
+        </h1>
+
+        <p>
+          <strong>Status:</strong>
+          {{ part.get_status_display }}
+        </p>
+
+        {% if part.description %}
+        <p style="margin-top: 10px">
+          <strong>Description:</strong><br />
+          <span style="color: #555"> {{ part.description }} </span>
+        </p>
+        {% endif %}
+
+        <p style="margin-top: 10px; color: #777; font-size: 14px">
+          Created: {{ part.created_at }}<br />
+          Last updated: {{ part.updated_at }}
+        </p>
+
+        <hr style="margin: 20px 0" />
+
+        <h2 style="font-size: 22px; margin-bottom: 10px">Work Items</h2>
+
+        {% if work_items %}
+        <ul style="padding-left: 20px; color: #444">
+          {% for item in work_items %}
+          <li style="margin-bottom: 10px">
+            <strong>{{ item.title }}</strong>
+            — {{ item.priority|title }} {% if item.due_date %}
+            <span style="font-weight: bold; color: #004085; margin-left: 6px">
+              (due: {{ item.due_date }})
+            </span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p style="color: #777; font-style: italic">
+          No work items for this part yet.
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
