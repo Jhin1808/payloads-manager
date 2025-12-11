@@ -31,6 +31,14 @@ A Django-based web application for managing aircraft interior payload components
 - Gunicorn (production)
 
 ---
+Note: The current version focuses on viewing parts and adding work items. Parts and tasks are created through the Django Admin interface, while the public-facing UI supports viewing parts and adding work items only. Editing and deletion features are not implemented yet and are planned as future enhancements.
+
+### Future Enhancements
+- Add edit/delete capabilities for Parts and Work Items
+- Add user authentication and role permissions
+- Support inline status updates and task completion tracking
+- Implement REST API endpoints (Django REST Framework)
+- Deployment automation and persistent cloud database
 
 ## Setup Instructions
 
@@ -44,3 +52,5 @@ source .venv/bin/activate       # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+
